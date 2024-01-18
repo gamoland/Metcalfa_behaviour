@@ -24,10 +24,20 @@ Cont_table_responderratio <- Cont_table_1_responders %>%
   gather(variable, value, -rowname) %>% 
   spread(rowname, value)
 
-Cont_table_responderratio <- as.table(Cont_table_responderratio)
-
 Fisher_test_test <- rstatix::pairwise_fisher_test(Cont_table_responderratio[2:6], detailed = T)
 
+Chi_square_test_ratio <- rstatix::pairwise_chisq_gof_test(Cont_table_responderratio[2:6])
+
+DMNT_U <- c(11,6)
+Camphor_U <- c(14,1)
+MeSa_U <- c(10,2)
+Pip_U <- c(17,2)
+valosz_U <- c(3/5 , 2/5)
+
+chisq.test(x = DMNT_U, p = valosz_U)
+chisq.test(x = Camphor_U, p = valosz_U)
+chisq.test(x = MeSa_U, p = valosz_U)
+chisq.test(x = Pip_U, p = valosz_U)
 
 #Fisher_responderratio
 Corrected_p_values_ratio_fisher <- tibble()

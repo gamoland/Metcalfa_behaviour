@@ -8,13 +8,11 @@ Tests_names <- Metcalfa_behavior_data %>%
   summarise()
 
 First_set_camphor <- Metcalfa_behavior_data %>% 
-  filter(VC2 == "Blank") %>% 
-  arrange(DATE) %>% 
-  slice(1:83)
+  filter(VC2 == "Blank")
 
 Cont_table_1 <- First_set_camphor %>% 
   group_by(Test) %>% 
-  summarise(Choosed_the_compound = sum(Choosed_the_compound == "Yes"))
+  summarise(Choosed_the_acompound = sum(Choosed_the_compound == "Yes"))
   
 Cont_table_2 <- First_set_camphor %>% 
   group_by(Test) %>% 
@@ -23,9 +21,18 @@ Cont_table_2 <- First_set_camphor %>%
 
 
 Cont_table <- Cont_table_1 %>% 
-  left_join(Cont_table_2) 
+  left_join(Cont_table_2)
+
+Cont_table_transposed <- Cont_table %>% 
+  column_to_rownames("Test") %>% 
+  rownames_to_column() %>% 
+  gather(variable, value, -rowname) %>% 
+  spread(rowname, value)
 
 #Fisher_test
+Fisher_test_groupwise <- rstatix::pairwise_fisher_test(Cont_table_transposed[2:6], detailed = T)
+
+
 Corrected_p_values <- tibble()
 
 i = 1
@@ -71,3 +78,32 @@ for (b in 1:nrow(Tests_names)) {
 Corrected_p_values_chi <- Corrected_p_values_chi %>% 
   adjust_pvalue(p.col = "p", method = "fdr") %>%
   add_significance()
+
+#Chi-square-final!!!!
+DMNT <- c(7,4)
+Camphor <- c(11,2)
+MeSa <- c(6,4)
+Pip <- c(14,3)
+valosz <- c(1/2 , 1/2)
+
+chisq.test(x = DMNT, p = valosz)
+chisq.test(x = Camphor, p = valosz)
+chisq.test(x = MeSa, p = valosz)
+chisq.test(x = Pip, p = valosz)
+
+
+#Pip_camphor
+Pip_Camphor_1 <- Metcalfa_behavior_data %>% 
+  filter(VC2 == "Piperiton",
+         VC1 == "Kámfor") %>%
+  group_by(Test) %>% 
+  summarise(Camphor = sum(Result == "Kámfor"))
+Pip_Camphor_2 <- Metcalfa_behavior_data %>% 
+  filter(VC2 == "Piperiton",
+         VC1 == "Kámfor") %>%
+  group_by(Test) %>% 
+  summarise(Piperiton = sum(Result == "Piperiton")) 
+
+Pip_Camphor <- Pip_Camphor_2 %>% 
+  left_join(Pip_Camphor_1)
+
