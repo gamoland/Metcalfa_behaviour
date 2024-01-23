@@ -9,6 +9,7 @@ library("see")
 library(nlme)
 library(grafify)
 library(emmeans)
+library(lme4)
 
 
 
@@ -81,24 +82,38 @@ Plot_ <- Metcalfa_behavior_data %>%
 Plot_
 
 GLM_data <- Metcalfa_behavior_data %>% 
-  filter((!Result %in% c("U"
-                         , "Mesa", "DMNT"
-                         )),
+  filter(!(Result %in% c("U")),
          VC1 != "Blank",
-         Test  != "DMNT Piperiton"
-         ) %>%
+         !(Test  %in% c( "DMNT Piperiton", "Kámfor Piperiton", "Piperiton  Mesa"))
+          ) %>%
   mutate(J_ID_ID = paste(J_ID,ID))
 
-GLM_DURATION <- lme(fixed = duration ~ Result,
-                    random = ~ 1 | Test,
+
+GLM_data_lmer <- lme4::lmer(formula = duration ~ Result + (1 | Test),
                     data = GLM_data,
                     na.action = na.omit)
-summary(GLM_DURATION)
-anova(GLM_DURATION)
 
-simulationOutput_lme <- simulateResiduals(fittedModel = GLM_DURATION)
+GLM_data_lme <- nlme::lme(fixed = duration ~ Result,
+                          random =  ~ 1 | Test,
+                          data = GLM_data,
+                          na.action = na.omit)
+
+GLM_data_grafify <- mixed_model(data = GLM_data, 
+                                Y_value = "duration", 
+                                Fixed_Factor = "Result", 
+                                Random_Factor = "Test")
+
+GLM_data_glmer <- glmer(formula = duration ~ Result + (1 | Test),
+                  data = GLM_data, family=gaussian(link = log))
+
+summary(GLM_data_glmer)
+summary(GLM_data_grafify)
+summary(GLM_data_lmer)
+summary(GLM_data_lme)
+anova(GLM_data_glmer)
+
+simulationOutput_lme <- simulateResiduals(fittedModel = GLM_data_glmer)
 plot(simulationOutput_lme)
-posthoc <- emmeans(GLM_DURATION, "Result")
-summary(posthoc, adjust = "fdr", infer = c(TRUE, FALSE), level = .84)
-PostHoc_results <- posthoc_Pairwise(Model = GLM_DURATION, Fixed_Factor = "Result", P_Adj = "fdr", level = .84)
+PostHoc_results <- posthoc_Pairwise(Model = GLM_data_grafify, Fixed_Factor = "Result", P_Adj = "fdr", level = .84)
 summary(PostHoc_results, level = .84)
+
