@@ -67,7 +67,7 @@ for (b in 1:nrow(Tests_names)) {
     ) %>% 
     column_to_rownames("Test")
   
-  Chi_square_test <- pairwise_chisq_gof_test(Chi_square_table) %>% 
+  Chi_square_test <- chisq_test(Chi_square_table) %>% 
     add_column(.before = "n", Test = Tests_names$Test[b])
   
   Corrected_p_values_chi <- Corrected_p_values_chi %>% 
@@ -78,6 +78,7 @@ for (b in 1:nrow(Tests_names)) {
 Corrected_p_values_chi <- Corrected_p_values_chi %>% 
   adjust_pvalue(p.col = "p", method = "fdr") %>%
   add_significance()
+
 
 #Chi-square-final!!!!
 DMNT <- c(7,4)
@@ -91,19 +92,39 @@ chisq.test(x = Camphor, p = valosz)
 chisq.test(x = MeSa, p = valosz)
 chisq.test(x = Pip, p = valosz)
 
+#graph
 
-#Pip_camphor
-Pip_Camphor_1 <- Metcalfa_behavior_data %>% 
-  filter(VC2 == "Piperiton",
-         VC1 == "Kámfor") %>%
-  group_by(Test) %>% 
-  summarise(Camphor = sum(Result == "Kámfor"))
-Pip_Camphor_2 <- Metcalfa_behavior_data %>% 
-  filter(VC2 == "Piperiton",
-         VC1 == "Kámfor") %>%
-  group_by(Test) %>% 
-  summarise(Piperiton = sum(Result == "Piperiton")) 
+Graph_data <- Metcalfa_behavior_data %>%
+  filter(!(Test %in% c("DMNT Piperiton", "Piperiton MeSa"))) %>%
+  mutate(is_blank_blank = ifelse(Test == "Blank Blank", TRUE, FALSE)) %>%
+  group_by(Test) %>%
+  summarise(
+    VC1_count = ifelse(any(is_blank_blank), sum(as.character(Result) == "L"), sum(as.character(Result) == as.character(VC1))),
+    VC2_count = ifelse(any(is_blank_blank), sum(as.character(Result) == "R"), sum(as.character(Result) == as.character(VC2))),
+    U_count = sum(Result == "U")
+  ) %>% 
+  mutate(VC2_count = -VC2_count,
+         Test = fct_reorder(Test, VC1_count)) %>% 
+  pivot_longer(cols = c("VC1_count", "VC2_count", "U_count"), names_to = "Side", values_to = "Number")
 
-Pip_Camphor <- Pip_Camphor_2 %>% 
-  left_join(Pip_Camphor_1)
+
+Graph_data$Test <- factor(Graph_data$Test, levels = Graph_data$Test[order(my_data$order_column)])
+Chisqrt_plot <- Graph_data %>% 
+  filter(Side != "U_count") %>% 
+  ggplot(aes(x = reorder(Test, -Number), y = Number)) +
+  geom_col() +
+  coord_flip() +
+  geom_hline(yintercept = 0, colour = "black") +
+  geom_blank(aes(y = Number * 1.05)) +
+  theme(panel.grid.major.x = element_blank(),
+                panel.grid.minor.x = element_blank(),
+                panel.grid.major.y = element_blank(),
+                panel.grid.minor.y = element_blank(),
+                # panel.grid.major.y = element_line(color = "grey", linetype = "dotted", size = 0.5),
+                plot.background = element_rect(fill = "white"),
+                strip.background = element_rect(color = "black", fill = "white"),
+                panel.background = element_rect(fill = "white", color = "black"),
+                panel.spacing = unit(0.7, "lines"))
+Chisqrt_plot
+
 
