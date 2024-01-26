@@ -18,7 +18,7 @@ Cont_table_2_responders <- First_set_camphor %>%
 
 
 Cont_table_responderratio <- Cont_table_1_responders %>% 
-  left_join(Cont_table_2_responders) %>%
+  left_join(Cont_table_2_responders) 
   column_to_rownames("Test") %>% 
   rownames_to_column() %>% 
   gather(variable, value, -rowname) %>% 
@@ -43,7 +43,7 @@ chisq.test(x = Pip_U, p = valosz_U)
 Corrected_p_values_ratio_fisher <- tibble()
 
 i = 1
-for (i in 1:nrow(Cont_table)) {
+for (i in 1:nrow(Cont_table_responderratio)) {
   
   Fisher_table <- Cont_table_responderratio %>% 
     filter(Test == "Blank Blank" | Test == Tests_names$Test[i]

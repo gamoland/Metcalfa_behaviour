@@ -12,5 +12,7 @@ Metcalfa_behavior_data <- read.xlsx("Data/final_results.xlsx", sheetIndex = 1) %
                                               "U", 
                                               "Yes")),
          Test = as.factor(paste(VC1, VC2)),
-         Result = as.factor(Result))
+         Result = as.factor(Result),
+         VC2 = as.factor(VC2),
+         VC1 = as.factor(VC1))
 
