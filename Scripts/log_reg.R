@@ -18,7 +18,7 @@ source("Scripts/Data_read_in.R")
 
 Log_reg_data <- Metcalfa_behavior_data %>% 
   filter(Choosed_the_compound != "U",
-         VC1 == "Piperiton " | VC1 == "Kámfor") %>% 
+         VC1 == "Piperiton" | VC1 == "Kámfor") %>% 
   mutate(Result_binary = ifelse(Choosed_the_compound == "Yes", 
                                 1,
                                 0))
@@ -84,36 +84,36 @@ Plot_
 GLM_data <- Metcalfa_behavior_data %>% 
   filter(!(Result %in% c("U")),
          VC1 != "Blank",
-         !(Test  %in% c( "DMNT Piperiton", "Kámfor Piperiton", "Piperiton  Mesa"))
+         !(Test  %in% c("DMNT Piperiton", "Piperiton MeSa"))
           ) %>%
   mutate(J_ID_ID = paste(J_ID,ID))
 
 
-GLM_data_lmer <- lme4::lmer(formula = duration ~ Result + (1 | Test),
+GLM_data_lmer <- lme4::lmer(formula = duration ~ Result*Test + (1 | Test),
                     data = GLM_data,
                     na.action = na.omit)
 
-GLM_data_lme <- nlme::lme(fixed = duration ~ Result,
+GLM_data_lme <- nlme::lme(fixed = duration ~ Result*Test,
                           random =  ~ 1 | Test,
                           data = GLM_data,
                           na.action = na.omit)
 
 GLM_data_grafify <- mixed_model(data = GLM_data, 
                                 Y_value = "duration", 
-                                Fixed_Factor = "Result", 
+                                Fixed_Factor = c("Result", "Test"), 
                                 Random_Factor = "Test")
 
-GLM_data_glmer <- glmer(formula = duration ~ Result + (1 | Test),
+GLM_data_glmer <- glmer(formula = duration ~ Result*Test + (1 | Test),
                   data = GLM_data, family=gaussian(link = log))
 
 summary(GLM_data_glmer)
 summary(GLM_data_grafify)
 summary(GLM_data_lmer)
 summary(GLM_data_lme)
-anova(GLM_data_glmer)
+anova(GLM_data_grafify)
 
 simulationOutput_lme <- simulateResiduals(fittedModel = GLM_data_glmer)
 plot(simulationOutput_lme)
-PostHoc_results <- posthoc_Pairwise(Model = GLM_data_grafify, Fixed_Factor = "Result", P_Adj = "fdr", level = .84)
+PostHoc_results <- posthoc_Pairwise(Model = GLM_data_lme, Fixed_Factor = "Result", P_Adj = "fdr", level = .84)
 summary(PostHoc_results, level = .84)
 
