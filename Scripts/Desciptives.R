@@ -4,18 +4,40 @@ library(stringi)
 library(MASS)
 library("bestNormalize")
 library("timetk")
+library(ggplot2)
 
-For_descriptives <- Metcalfa_behavior_data %>% 
-  filter(VC1 != "Blank",
-         !(Result %in%  c("Blank", "U"))) %>% 
-  group_by(Test) 
+Responder_nonresponder_undecided <- Metcalfa_behavior_data %>%
+  filter(!(Test %in% c("DMNT piperiton", "piperiton Mesa"))) %>% 
+  mutate(is_blank_blank = ifelse(Test == "blank blank", TRUE, FALSE)) %>% 
+  group_by(Test) %>% 
+  summarise(n = n(),
+            Responders = ifelse(any(is_blank_blank), 
+                                sum(Result %in% c("L", "R")), 
+                                sum(Result %in% c("DMNT", "camphor", "piperiton", "MeSa", "blank"))),
+            Undecided = sum(Result == "U"),
+            Non_starters = sum(Result == "N"),
+            Responders_percent = round(ifelse(any(is_blank_blank), 
+                                       (sum(Result %in% c("L", "R"))*100)/n(), 
+                                       (sum(Result %in% c("DMNT", "camphor", "piperiton", "MeSa", "blank"))*100)/n()), 2),
+            Undecided_percent = round((sum(Result == "U")*100)/n(), 2),
+            Non_starters_percent = round((sum(Result == "N")*100)/n(), 2))
 
-Replicates <- For_descriptives %>% 
-  summarise(n = n()) #--> based on this "Piperiton  Mesa" should be excluded
+write.xlsx(Responder_nonresponder_undecided, "Output/Sample_size.xlsx")
 
 
 
 
+
+
+
+
+
+
+
+
+
+Final_data <- Metcalfa_behavior_data %>% 
+  filter(!(Test %in% c("DMNT piperiton", "piperiton Mesa")))
 
 
 Metcalfa_behavior_data_boxcox <- Metcalfa_behavior_data %>% 
@@ -27,8 +49,8 @@ Metcalfa_behavior_data_boxcox <- Metcalfa_behavior_data %>%
 
 Plot_time_Blank <- Metcalfa_behavior_data_boxcox %>% 
   filter(Result != "U",
-         !(Test %in% c("DMNT Piperiton", "Kámfor Piperiton"))) %>% 
-  mutate(Xaxis = if_else(Result == "Blank", "Blank", "Compound")) %>% 
+         !(Test %in% c("DMNT piperiton", "camphor piperiton"))) %>% 
+  mutate(Xaxis = if_else(Result == "blank", "blank", "Compound")) %>% 
   ggplot() +
   geom_jitter(aes(x = Xaxis, y = duration), width = 0.15, ) +
   facet_grid(VC1 ~ ., ) +

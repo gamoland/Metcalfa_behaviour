@@ -1,0 +1,82 @@
+,DATE,Original.file.name.,START.true..video.dur,END.IMG..vis.frame.rate,protocol.ID,J_ID,VC1.side,VC2.side,ID,VC1,VC2,Choosen.side,Result,duration,megjegyzés,Choosed_the_compound,Test,Year,Duration,Surv_result,Censored
+1,20230727,IMG_20230727_105752,1051,1058,P1,J3,L,R,IMG1,piperiton,blank,L,piperiton,7,NA,Yes,blank piperiton,2023,7,compound,1
+2,20230727,IMG_20230727_113907,1139,1144,P4,J3,R,L,IMG4,piperiton,blank,L,blank,5,NA,No,blank piperiton,2023,5,blank,1
+3,20230727,IMG_20230727_125556,1255,1257,P5,J6,L,R,IMG5,piperiton,blank,L,piperiton,2,NA,Yes,blank piperiton,2023,2,compound,1
+4,20230727,IMG_20230727_131432,1314,1317,P6,J6,L,R,IMG6,piperiton,blank,R,blank,3,NA,No,blank piperiton,2023,3,blank,1
+5,20230727,IMG_20230727_132500,1325,1338,P7,J6,R,L,IMG7,piperiton,blank,R,piperiton,13,NA,Yes,blank piperiton,2023,13,compound,1
+6,20230727,IMG_20230727_140000,1404,1406,P9,J6,L,R,IMG9,piperiton,blank,L,piperiton,2,NA,Yes,blank piperiton,2023,2,compound,1
+7,20230727,IMG_20230727_151752,1517,1519,P13,J6,L,R,IMG13,piperiton,blank,R,blank,2,NA,No,blank piperiton,2023,2,blank,1
+8,20230727,IMG_20230727_152055,1520,1530,P14,J6,L,R,IMG14,piperiton,blank,L,piperiton,10,hiányzik a képek vége,Yes,blank piperiton,2023,10,compound,1
+9,20230727,na,1600,1602,P16,J6,R,L,IMG14C,piperiton,blank,R,piperiton,2,hiányoznak a képek,Yes,blank piperiton,2023,2,compound,1
+10,20230728,IMG_20230728_131717,1317,1324,P1,J4,L,R,IMG15,MeSa,blank,L,MeSa,7,GERGO NÉZD MEG:IMG_20230728_132432,Yes,blank MeSa,2023,7,compound,1
+11,20230728,IMG_20230728_135310,1350,1354,P3,J4,R,L,IMG17,MeSa,blank,R,MeSa,4,GERGO NÉZD MEG:IMG_20230728_135459,Yes,blank MeSa,2023,4,compound,1
+12,20230728,IMG_20230728_135717,1357,1358,P4,J4,R,L,IMG18,MeSa,blank,R,MeSa,1,NA,Yes,blank MeSa,2023,1,compound,1
+13,20230728,IMG_20230728_140305,1403,1406,P5,J4,L,R,IMG19,MeSa,blank,R,blank,3,NA,No,blank MeSa,2023,3,blank,1
+14,20230728,IMG_20230728_142924,1429,1432,P7,J4,R,L,IMG21,MeSa,blank,R,MeSa,3,NA,Yes,blank MeSa,2023,3,compound,1
+15,20230728,IMG_20230728_154028,1540,1543,P10,J4,L,R,IMG24,MeSa,blank,R,blank,3,NA,No,blank MeSa,2023,3,blank,1
+16,20230728,IMG_20230728_154752,1547,1548,P11,J4,R,L,IMG25,MeSa,blank,R,MeSa,1,NA,Yes,blank MeSa,2023,1,compound,1
+17,20230728,IMG_20230728_155219,1552,1558,P12,J4,R,L,IMG26,MeSa,blank,R,MeSa,6,NA,Yes,blank MeSa,2023,6,compound,1
+18,20230728,IMG_20230728_160350,1603,1605,P13,J4,L,R,IMG27,MeSa,blank,R,blank,2,NA,No,blank MeSa,2023,2,blank,1
+19,20230728,IMG_20230728_164120,1641,1648,P15,J4,R,L,IMG29,MeSa,blank,L,blank,7,NA,No,blank MeSa,2023,7,blank,1
+20,20230729,IMG_20230729_142106.jpg,1418,1419,P1,J5,L,R,IMG30,DMNT,blank,R,blank,1,NA,No,blank DMNT,2023,1,blank,1
+21,20230729,IMG_20230729_143212.jpg,1422,1429,P2,J5,L,R,IMG31,DMNT,blank,R,blank,7,NA,No,blank DMNT,2023,7,blank,1
+22,20230729,IMG_20230729_151011.jpg,1454,1507,P4,J5,R,L,IMG33,DMNT,blank,R,DMNT,13,NA,Yes,blank DMNT,2023,13,compound,1
+23,20230729,IMG_20230729_153232.jpg,1514,1519,P5,J5,L,R,IMG34,DMNT,blank,R,blank,5,NA,No,blank DMNT,2023,5,blank,1
+24,20230729,IMG_20230729_155114.jpg,1534,1536,P6,J5,L,R,IMG35,DMNT,blank,L,DMNT,2,NA,Yes,blank DMNT,2023,2,compound,1
+25,20230729,IMG_20230729_161034.jpg,1553,1556,P7,J5,R,L,IMG36,DMNT,blank,L,blank,3,NA,No,blank DMNT,2023,3,blank,1
+26,20230730,IMG_20230730_122405.jpg,1220,1221,P1,J7,L,R,IMG46,camphor,blank,L,camphor,1,NA,Yes,blank camphor,2023,1,compound,1
+27,20230730,IMG_20230730_123015.jpg,1226,1229,P2,J7,L,R,IMG47,camphor,blank,L,camphor,3,NA,Yes,blank camphor,2023,3,compound,1
+28,20230730,IMG_20230730_130915.jpg,1304,1306,P5,J7,L,R,IMG50,camphor,blank,L,camphor,2,NA,Yes,blank camphor,2023,2,compound,1
+29,20230730,IMG_20230730_131914.jpg,1312,1314,P6,J7,L,R,IMG51,camphor,blank,L,camphor,2,NA,Yes,blank camphor,2023,2,compound,1
+30,20230730,IMG_20230730_132533.jpg,1321,1323,P7,J7,R,L,IMG52,camphor,blank,L,blank,2,NA,No,blank camphor,2023,2,blank,1
+31,20230730,IMG_20230730_142108.jpg,1417,1418,P10,J7,L,R,IMG55,camphor,blank,L,camphor,1,NA,Yes,blank camphor,2023,1,compound,1
+32,20230730,IMG_20230730_142945.jpg,1423,1424,P11,J7,R,L,IMG56,camphor,blank,R,camphor,1,NA,Yes,blank camphor,2023,1,compound,1
+33,20230730,IMG_20230730_143412.jpg,1431,1433,P12,J7,R,L,IMG57,camphor,blank,R,camphor,2,NA,Yes,blank camphor,2023,2,compound,1
+34,20230730,IMG_20230730_143853.jpg,1438,1439,P14,J7,L,R,IMG59,camphor,blank,L,camphor,1,NA,Yes,blank camphor,2023,1,compound,1
+35,20230730,IMG_20230730_143922.jpg,1438,1438,P13,J7,L,R,IMG58,camphor,blank,R,blank,1,NA,No,blank camphor,2023,1,blank,1
+36,20230730,IMG_20230730_144743.jpg,1443,1445,P15,J7,R,L,IMG60,camphor,blank,R,camphor,2,NA,Yes,blank camphor,2023,2,compound,1
+37,20230730,IMG_20230730_145040.jpg,1450,1503,P16,J7,R,L,IMG61,camphor,blank,R,camphor,13,NA,Yes,blank camphor,2023,13,compound,1
+38,20230730,NA,1253,1256,P4,J7,R,L,IMG49,camphor,blank,R,camphor,3,NA,Yes,blank camphor,2023,3,compound,1
+39,20230803,VID_20230803_095915.mp4,10,30,P19,J8,L,R,V147,piperiton,blank,L,piperiton,5,NA,Yes,blank piperiton,2023,5,compound,1
+40,20230803,VID_20230803_104914.mp4,5,15,P22,J8,R,L,V150,piperiton,blank,L,piperiton,1.25,NA,Yes,blank piperiton,2023,1.25,compound,1
+41,20230803,VID_20230803_111858.mp4,15,30,P24,J8,L,R,V152,piperiton,blank,L,piperiton,7.5,NA,Yes,blank piperiton,2023,7.5,compound,1
+42,20230803,VID_20230803_113539.mp4,7,15,P25,J8,L,R,V153,piperiton,blank,L,piperiton,1.75,NA,Yes,blank piperiton,2023,1.75,compound,1
+43,20230803,VID_20230803_113825.mp4,5,60,P26,J8,R,L,V154,piperiton,blank,R,piperiton,5,"40s összesen, vid dur nem releváns!",Yes,blank piperiton,2023,5,compound,1
+44,20230803,VID_20230803_114032.mp4,14,60,P27,J8,R,L,V155,piperiton,blank,L,piperiton,14,NA,Yes,blank piperiton,2023,14,compound,1
+45,20230804,VID_20230804_141606.mp4,10,30,D1,J8,L,R,V1,DMNT,blank,L,DMNT,5,NA,Yes,blank DMNT,2023,5,compound,1
+46,20230804,VID_20230804_143006.mp4,10,30,D2,J8,L,R,V2,DMNT,blank,L,DMNT,5,NA,Yes,blank DMNT,2023,5,compound,1
+47,20230804,VID_20230804_144442.mp4,5,30,D3,J8,R,L,V3,DMNT,blank,R,DMNT,2.5,NA,Yes,blank DMNT,2023,2.5,compound,1
+48,20230804,VID_20230804_154853.mp4,14,30,D6,J8,L,R,V6,DMNT,blank,L,DMNT,7,NA,Yes,blank DMNT,2023,7,compound,1
+49,20230804,VID_20230804_160045.mp4,17,30,D7,J8,R,L,V7,DMNT,blank,R,DMNT,8.5,NA,Yes,blank DMNT,2023,8.5,compound,1
+61,20240730,VID_20240730_105419.mp4,1031,1116,P1,J_3,blank,DMNT,NA,DMNT,blank,R,DMNT,4,NA,Yes,blank DMNT,2024,4,compound,1
+62,20240730,VID_20240730_114053.mp4,1120,1140,P3,J_3,DMNT,blank,NA,DMNT,blank,R,blank,2.7,kaki állat,No,blank DMNT,2024,2.7,blank,1
+63,20240730,VID_20240730_132529.mp4,1304,1325,P7,J_3,DMNT,blank,NA,DMNT,blank,L,DMNT,1.6,NA,Yes,blank DMNT,2024,1.6,compound,1
+64,20240730,VID_20240730_140145.mp4,1328,1401,P8,J_3,DMNT,blank,NA,DMNT,blank,R,blank,10,NA,No,blank DMNT,2024,10,blank,1
+65,20240731,VID_20240731_104258.mp4,1035,1042,P1,J_4,blank,DMNT,NA,DMNT,blank,L,blank,10.5,NA,No,blank DMNT,2024,10.5,blank,1
+66,20240731,VID_20240731_105109.mp4,1046,1051,P2,J_4,blank,DMNT,NA,DMNT,blank,R,DMNT,9.5,NA,Yes,blank DMNT,2024,9.5,compound,1
+67,20240731,VID_20240731_122546.mp4,1218,1225,P7,J_4,DMNT,blank,NA,DMNT,blank,L,DMNT,14.5,NA,Yes,blank DMNT,2024,14.5,compound,1
+68,20240801,VID_20240801_101717.mp4,957,1017,P3,J_5,DMNT,blank,NA,DMNT,blank,R,blank,16.5,NA,No,blank DMNT,2024,16.5,blank,1
+69,20240801,VID_20240801_102135.mp4,1018,1021,P4,J_5,DMNT,blank,NA,DMNT,blank,L,DMNT,4.5,NA,Yes,blank DMNT,2024,4.5,compound,1
+70,20240801,VID_20240801_105450.mp4,1051,1054,P6,J_5,blank,DMNT,NA,DMNT,blank,L,blank,1.175,NA,No,blank DMNT,2024,1.175,blank,1
+72,20240806,VID_20240806_111932.mp4,1058,1119,P3,J_7,camphor,blank,NA,camphor,blank,R,blank,9,NA,No,blank camphor,2024,9,blank,1
+73,20240806,VID_20240806_123605.mp4,1203,1230,P5,J_7,blank,camphor,NA,camphor,blank,R,camphor,7.6,NA,Yes,blank camphor,2024,7.6,compound,1
+74,20240807,VID_20240807_104714.mp4,1004,1047,P2,J_8,blank,MeSa,NA,MeSa,blank,R,MeSa,5,NA,Yes,blank MeSa,2024,5,compound,1
+75,20240823,VID_20240823_101212.mp4,953,1012,P2,J_10,blank,MeSa,NA,MeSa,blank,L,blank,22,NA,No,blank MeSa,2024,22,blank,1
+76,20240823,VID_20240823_104917.mp4,1036,1049,P4,J_10,MeSa,blank,NA,MeSa,blank,R,blank,22,NA,No,blank MeSa,2024,22,blank,1
+77,20240823,VID_20240823_111643.mp4,1113,1116,P6,J_10,blank,MeSa,NA,MeSa,blank,R,MeSa,22,NA,Yes,blank MeSa,2024,22,compound,1
+78,20240823,VID_20240823_114401.mp4,1138,1144,P8,J_10,MeSa,blank,NA,MeSa,blank,L,MeSa,22,NA,Yes,blank MeSa,2024,22,compound,1
+79,20240824,VID_20240824_101908.mp4,958,1019,P1,J_11,blank,MeSa,NA,MeSa,blank,R,MeSa,12.5,NA,Yes,blank MeSa,2024,12.5,compound,1
+80,20240824,VID_20240824_110649.mp4,1045,1106,P3,J_11,MeSa,blank,NA,MeSa,blank,R,blank,5.45,NA,No,blank MeSa,2024,5.45,blank,1
+81,20240824,VID_20240824_115547.mp4,1136,1155,P5,J_11,blank,MeSa,NA,MeSa,blank,R,MeSa,3.5,NA,Yes,blank MeSa,2024,3.5,compound,1
+82,20240824,VID_20240824_124327.mp4,1223,1243,P7,J_11,MeSa,blank,NA,MeSa,blank,R,blank,22,NA,No,blank MeSa,2024,22,blank,1
+83,20240825,VID_20240825_095353.mp4,934,953,P10,J_11,camphor,blank,NA,camphor,blank,L,camphor,5.6,NA,Yes,blank camphor,2024,5.6,compound,1
+84,20240825,VID_20240825_120257.mp4,1142,1202,P15,J_11,blank,camphor,NA,camphor,blank,R,camphor,8.2,NA,Yes,blank camphor,2024,8.2,compound,1
+85,20240825,VID_20240825_122914.mp4,1206,1229,P16,J_11,blank,camphor,NA,camphor,blank,R,camphor,10,NA,Yes,blank camphor,2024,10,compound,1
+86,20240826,VID_20240826_100223.mp4,941,1002,P1,J_12,camphor,blank,NA,camphor,blank,R,blank,17,NA,No,blank camphor,2024,17,blank,1
+87,20240826,VID_20240826_111918.mp4,1055,1119,P4,J_12,blank,camphor,NA,camphor,blank,R,camphor,14.5,NA,Yes,blank camphor,2024,14.5,compound,1
+88,20240826,VID_20240826_114225.mp4,1122,1140,P5,J_12,camphor,blank,NA,camphor,blank,L,camphor,17,"elfelejtettem elotte cserélni a csövet, ",Yes,blank camphor,2024,17,compound,1
+89,20240826,VID_20240826_121520.mp4,1154,1215,P6,J_12,camphor,blank,NA,camphor,blank,L,camphor,11.3,NA,Yes,blank camphor,2024,11.3,compound,1
+90,20240826,VID_20240826_123725.mp4,1218,1237,P7,J_12,blank,camphor,NA,camphor,blank,L,blank,22,NA,No,blank camphor,2024,22,blank,1
+91,20240827,VID_20240827_115318.mp4,1131,1153,P1,J_13,blank,piperiton,NA,piperiton,blank,L,blank,8.75,NA,No,blank piperiton,2024,8.75,blank,1
+92,20240827,VID_20240827_125526.mp4,1231,1255,P3,J_13,piperiton,blank,NA,piperiton,blank,L,piperiton,0.6,NA,Yes,blank piperiton,2024,0.6,compound,1
+93,20240827,VID_20240827_134252.mp4,1323,1342,P5,J_13,blank,piperiton,NA,piperiton,blank,R,piperiton,22,NA,Yes,blank piperiton,2024,22,compound,1

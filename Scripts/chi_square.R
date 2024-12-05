@@ -1,130 +1,154 @@
 source("Scripts/Data_read_in.R")
 library(rstatix)
+library("effectsize")
 
 Tests_names <- Metcalfa_behavior_data %>% 
-  filter(VC2 == "Blank",
-         VC1 != "Blank") %>% 
-  group_by(Test) %>% 
-  summarise()
+  group_by(Test) %>%
+  summarise() %>% 
+  filter (Test != c("DMNT piperiton", "piperiton MeSa"))
 
-First_set_camphor <- Metcalfa_behavior_data %>% 
-  filter(VC2 == "Blank")
+Cont_table_base <- Metcalfa_behavior_data %>%
+  filter(!(Test %in% c("DMNT piperiton", "piperiton MeSa"))) %>% 
+  mutate(is_blank_blank = ifelse(Test == "blank blank", TRUE, FALSE)) %>% 
+  group_by(Test) 
 
-Cont_table_1 <- First_set_camphor %>% 
-  group_by(Test) %>% 
-  summarise(Choosed_the_acompound = sum(Choosed_the_compound == "Yes"))
-  
-Cont_table_2 <- First_set_camphor %>% 
-  group_by(Test) %>% 
-  summarise(
-            Choosed_the_blank = sum(Choosed_the_compound == "No"))
+Starters_nonStarters <- Cont_table_base%>% 
+  summarise(Starters = sum(Result != "N"),
+            Non_starters = sum(Result == "N"))
+
+Undiceded_Responders <- Cont_table_base %>% 
+  summarise(Responders = ifelse(any(is_blank_blank), 
+                                sum(Result %in% c("L", "R")), 
+                                sum(Result %in% c("DMNT", "camphor", "piperiton", "MeSa", "blank"))),
+            Undecided = sum(Result == "U"))
+
+Kaki <-  Cont_table_base %>%
+  filter(Result != "N", Test == "camphor piperiton") %>%
+  summarise(Yes_piperiton_Count = sum(Result == "piperiton", na.rm = TRUE),
+            No_camphor_Count = sum(Result == "camphor", na.rm = TRUE))
+
+Choosed_compound <- Cont_table_base %>%
+  filter(Result != "N", Test != "camphor piperiton") %>% 
+  mutate(Is_Yes = Choosed_the_compound == "Yes",
+         Is_No = Choosed_the_compound == "No") %>% 
+  summarise(Yes_piperiton_Count = sum(Is_Yes, na.rm = TRUE),
+            No_camphor_Count = sum(Is_No, na.rm = TRUE)) %>% 
+  bind_rows(Kaki)
 
 
-Cont_table <- Cont_table_1 %>% 
-  left_join(Cont_table_2)
-
-Cont_table_transposed <- Cont_table %>% 
-  column_to_rownames("Test") %>% 
-  rownames_to_column() %>% 
-  gather(variable, value, -rowname) %>% 
-  spread(rowname, value)
-
-#Fisher_test
-Fisher_test_groupwise <- rstatix::pairwise_fisher_test(Cont_table_transposed[2:6], detailed = T)
-
-
-Corrected_p_values <- tibble()
-
-i = 1
-for (i in 1:nrow(Cont_table)) {
-  
-  Fisher_table <- Cont_table %>% 
-    filter(Test == "Blank Blank" | Test == Tests_names$Test[i]
-    ) %>% 
-    column_to_rownames("Test")
-  
-  Fisher_test <- fisher_test(Fisher_table,
-                             alternative = "two.sided",
-                             detailed = T) %>%
-    add_significance() %>%
-    add_column(.before = "n", Test = Tests_names$Test[i])
-  
-  Corrected_p_values <- Corrected_p_values %>% 
-  bind_rows(Fisher_test)
-}
-
-# Result_fisher_1 <- row_wise_fisher_test(Cont_table, p.adjust.method = "fdr")
-
+# # Cont_table_transposed <- Cont_table %>% 
+# #   column_to_rownames("Test") %>% 
+# #   rownames_to_column() %>% 
+# #   gather(variable, value, -rowname) %>% 
+# #   spread(rowname, value)
 
 #Chi_square
-Corrected_p_values_chi <- tibble()
+#ORs
+
+#blankblank: Starters:45, Nonsterters:8
+Corrected_p_values_chi_St_NSt <- tibble()
+BlankBlank_St <- Starters_nonStarters %>% 
+  filter(Test == "blank blank") %>% 
+  column_to_rownames("Test")
 
 b = 1
 for (b in 1:nrow(Tests_names)) {
   
-  Chi_square_table <- Cont_table %>% 
-    filter(Test == Tests_names$Test[b]
-    ) %>% 
+  Chi_square_table <- Starters_nonStarters %>% 
+    filter(Test == Tests_names$Test[b]) %>% 
     column_to_rownames("Test")
   
-  Chi_square_test <- chisq_test(Chi_square_table) %>% 
+  Chi_square_test <- chisq_test(Chi_square_table, p = c(45/53, 8/53)) %>% 
     add_column(.before = "n", Test = Tests_names$Test[b])
   
-  Corrected_p_values_chi <- Corrected_p_values_chi %>% 
+  OR_Starters <- Chi_square_table %>% 
+    bind_rows(BlankBlank_St)
+  
+  ORs <- ((OR_Starters[1,1]/OR_Starters[1,2])/OR_Starters[2,1]/OR_Starters[2,2])
+  
+  
+  Corrected_p_values_chi_St_NSt <- Corrected_p_values_chi_St_NSt %>% 
     bind_rows(Chi_square_test)
+  
+  print(chisq_descriptives(chisq_test(Chi_square_table)))
   
 }
 
-Corrected_p_values_chi <- Corrected_p_values_chi %>% 
+Corrected_p_values_chi_St_NSt <- Corrected_p_values_chi_St_NSt %>% 
+  filter (Test != "blank blank") %>% 
   adjust_pvalue(p.col = "p", method = "fdr") %>%
   add_significance()
 
 
-#Chi-square-final!!!!
-DMNT <- c(7,4)
-Camphor <- c(11,2)
-MeSa <- c(6,4)
-Pip <- c(14,3)
-valosz <- c(1/2 , 1/2)
 
-chisq.test(x = DMNT, p = valosz)
-chisq.test(x = Camphor, p = valosz)
-chisq.test(x = MeSa, p = valosz)
-chisq.test(x = Pip, p = valosz)
+#blankblank: Undiceded: 21 Responders: 24
+Corrected_p_values_chi_U_R <- tibble()
 
-#graph
+b = 1
+for (b in 1:nrow(Tests_names)) {
+  
+  Chi_square_table <- Undiceded_Responders %>% 
+    filter(Test == Tests_names$Test[b]
+    ) %>% 
+    column_to_rownames("Test")
+  
+  Chi_square_test <- chisq_test(Chi_square_table, p = c(21/45, 24/45)) %>% 
+    add_column(.before = "n", Test = Tests_names$Test[b])
+  
+  Corrected_p_values_chi_U_R <- Corrected_p_values_chi_U_R %>% 
+    bind_rows(Chi_square_test)
+  
+  print(chisq_descriptives(chisq_test(Chi_square_table)))
+  
+}
 
-Graph_data <- Metcalfa_behavior_data %>%
-  filter(!(Test %in% c("DMNT Piperiton", "Piperiton MeSa"))) %>%
-  mutate(is_blank_blank = ifelse(Test == "Blank Blank", TRUE, FALSE)) %>%
-  group_by(Test) %>%
-  summarise(
-    VC1_count = ifelse(any(is_blank_blank), sum(as.character(Result) == "L"), sum(as.character(Result) == as.character(VC1))),
-    VC2_count = ifelse(any(is_blank_blank), sum(as.character(Result) == "R"), sum(as.character(Result) == as.character(VC2))),
-    U_count = sum(Result == "U")
-  ) %>% 
-  mutate(VC2_count = -VC2_count,
-         Test = fct_reorder(Test, VC1_count)) %>% 
-  pivot_longer(cols = c("VC1_count", "VC2_count", "U_count"), names_to = "Side", values_to = "Number")
+Corrected_p_values_chi_U_R <- Corrected_p_values_chi_U_R %>% 
+  filter (Test != "blank blank") %>% 
+  adjust_pvalue(p.col = "p", method = "fdr") %>%
+  add_significance()
 
 
-Graph_data$Test <- factor(Graph_data$Test, levels = Graph_data$Test[order(my_data$order_column)])
-Chisqrt_plot <- Graph_data %>% 
-  filter(Side != "U_count") %>% 
-  ggplot(aes(x = reorder(Test, -Number), y = Number)) +
-  geom_col() +
-  coord_flip() +
-  geom_hline(yintercept = 0, colour = "black") +
-  geom_blank(aes(y = Number * 1.05)) +
-  theme(panel.grid.major.x = element_blank(),
-                panel.grid.minor.x = element_blank(),
-                panel.grid.major.y = element_blank(),
-                panel.grid.minor.y = element_blank(),
-                # panel.grid.major.y = element_line(color = "grey", linetype = "dotted", size = 0.5),
-                plot.background = element_rect(fill = "white"),
-                strip.background = element_rect(color = "black", fill = "white"),
-                panel.background = element_rect(fill = "white", color = "black"),
-                panel.spacing = unit(0.7, "lines"))
-Chisqrt_plot
 
+
+
+
+
+#blankblank: L:12 R:12
+Corrected_p_values_chi_compound <- tibble()
+
+b = 1
+for (b in 1:nrow(Tests_names)) {
+  
+  Chi_square_table <- Choosed_compound %>% 
+    filter(Test == Tests_names$Test[b]
+    ) %>% 
+    column_to_rownames("Test")
+  
+  Chi_square_test <- chisq_test(Chi_square_table, p = c(12/24, 12/24)) %>% 
+    add_column(.before = "n", Test = Tests_names$Test[b])
+  
+  Corrected_p_values_chi_compound <- Corrected_p_values_chi_compound %>% 
+    bind_rows(Chi_square_test)
+  
+  print(chisq_descriptives(chisq_test(Chi_square_table)))
+  
+}
+
+Corrected_p_values_chi_compound <- Corrected_p_values_chi_compound %>% 
+  filter (Test != "blank blank") %>% 
+  adjust_pvalue(p.col = "p", method = "fdr") %>%
+  add_significance()
+
+
+
+#Odds rations
+#Starters_NonStarters
+b = 1
+for (b in 1:nrow(Tests_names)) {
+  Chi_square_table <- Starters_nonStarters %>% 
+  filter(Test == Tests_names$Test[b]) %>% 
+  column_to_rownames("Test")
+  
+  
+}
 
