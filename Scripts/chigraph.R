@@ -56,3 +56,6 @@ subtitles <- ggplot() +
 # Combine the subtitles and main plot vertically
 final_plot <- subtitles / kakkantas + plot_layout(heights = c(1, 10))  # Adjust heights as needed
 final_plot
+
+
+#

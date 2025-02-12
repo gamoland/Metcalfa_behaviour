@@ -111,13 +111,13 @@ mod_final_y <- glm(Compound ~ Test * Year,
 anova(mod_final, mod_final_y)
 summary(mod_final)
 Anova(mod_final_y)
-em_final <- emmeans(mod_final, ~ Test, level = .84)
-contrast(em_final, "trt.vs.ctrl", ref = "blank blank", type = "response", adjust = "fdr", level = .84)
+em_final <- emmeans(mod_final, ~ Test)
+emmeans::test(em_final,null = qlogis(0.5), level = 0.84, adjust = "fdr")
 
 
 #binomialis - Deciders
 
-tmp2<-subset(Logregdata, Deciders!="NA" & Test != "camphor piperiton")
+tmp2<-subset(Logregdata, Deciders!="NA")
 Bin_log_reg_deciders <- glmmTMB(Deciders ~ Test + (1 | Year),
                     data=tmp2,
                     family = "binomial")
@@ -151,26 +151,4 @@ em123456 <- emmeans(mod123456, ~ Test)
 contrast(em123456, "trt.vs.ctrl", ref = "blank blank", type ="response")
 
 
-#binomialis - Starters
-tmp3<-subset(Logregdata, Starters!="NA" & Test != "camphor piperiton")
-Bin_log_reg_starters <- glmer(Starters ~ Test + (1 | Year),
-                    Logregdata,
-                    family = "binomial")
-Bin_log_reg_starters_y <- glm(Starters ~ Test + Year,
-                              Logregdata,
-                                family = "binomial")
 
-
-simulationOutput_starters <- simulateResiduals(fittedModel = Bin_log_reg_starters_y)
-plot(simulationOutput_starters)
-
-Anova(Bin_log_reg_starters)
-Anova(Bin_log_reg_starters_y)
-anova(Bin_log_reg_starters, Bin_log_reg_starters_y)
-
-summary(Bin_log_reg_starters_y)
-summary(Bin_log_reg_starters)
-
-
-em_ST_Y <- emmeans(Bin_log_reg_starters, ~ Test) 
-contrast(em_ST_Y, "trt.vs.ctrl", ref = "blank blank", type ="response", adjust = "fdr")
