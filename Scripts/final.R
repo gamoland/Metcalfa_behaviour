@@ -43,7 +43,8 @@ Summary_data <- Logregdata %>%
     Deciders = sum(Deciders == T, na.rm = T),
     Blank = sum(!Compound, na.rm = T),
     Compound = sum(Compound == T, na.rm = T),
-    Total = n())
+    Total = n()) %>% 
+  mutate(RI = ((Nonstarters-Starters)/(Starters+Nonstarters))*100)
 
 #binomialis - Starters
 Bin_log_reg_starters <- glmmTMB(Starters ~ Test + (1 | Year),
@@ -88,7 +89,7 @@ anova(Bin_log_reg_deciders_y, Bin_log_reg_deciders)
 summary(Bin_log_reg_deciders_y)
 
 em_D_Y <- emmeans(Bin_log_reg_deciders_y, ~ Test | Year)
-contrast(em2, "trt.vs.ctrl", ref = "blank blank", type = "response", adjust = "fdr")
+contrast(em_D_Y, "trt.vs.ctrl", ref = "blank blank", type = "response", adjust = "fdr")
 
 #binomialis - Choosers
 C_WNAs <- subset(Logregdata, Compound != "NA")
@@ -104,8 +105,8 @@ Anova(mod_final)
 anova(mod_final, mod_final_y)
 summary(mod_final)
 
-em_final <- emmeans(mod_final, ~ Test)
-emmeans::test(em_final, adjust = "fdr")
+em_final <- emmeans(mod_final, ~ Test, type = "response")
+emmeans::test(em_final, adjust = "fdr" )
 
 
 #ICICLE
@@ -149,13 +150,13 @@ values <- c(
 hover_text <- labels
 hover_text[2:length(labels)] <- paste0(labels[2:length(labels)], ": ", values[2:length(values)])
 colors <- c(
-  "white",  # Nymphs
-  '#d9d9d9','#bdbdbd','#969696','#737373','#525252','#252525','#000000',  # blank blank
-  '#dadaeb','#bcbddc','#9e9ac8','#6a51a3','#807dba','#54278f','#3f007d',  # blank camphor
-  '#fdd0a2','#fdae6b','#fd8d3c','#d94801','#f16913','#a63603','#7f2704',  # blank DMNT
-  '#c7e9c0','#a1d99b','#74c476','#238b45','#41ab5d','#006d2c','#00441b',  # blank MeSa
-  '#c6dbef','#9ecae1','#6baed6','#2171b5','#4292c6','#08519c','#08306b',  # blank piperiton
-  '#F5E6AD','#F4CAA4','#F4AD9B','#F39192','#F27589','#F25880','#F13C77'  # camphor piperiton
+  "B3B3B3",  # Nymphs
+  '#FFFFFF','#FFFFFF','#FFFFFF','#FFFFFF','#FFFFFF','#000000','#000000',  # blank blank#
+  '#A8D8FF','#A8D8FF','#A8D8FF','#FFFFFF','#7FAAE6','#000000','#000000',  # blank camphor#
+  '#FFD8A8','#FFD8A8','#FFD8A8','#FFFFFF','#E6B27F','#000000','#000000',  # blank DMNT#
+  '#B3E6B3','#B3E6B3','#B3E6B3','#FFFFFF','#7FCF7F','#000000','#000000',  # blank MeSa#
+  '#FFCDEA','#FFCDEA','#FFCDEA','#FFFFFF','#E685B3','#000000','#000000',  # blank piperiton
+  '#B3A0D0','#B3A0D0','#B3A0D0','#7FAAE6','#E685B3','#000000','#000000'  # camphor piperiton
 )
 marker <- list(
   colors = ~colors,
@@ -173,10 +174,16 @@ fig <- plot_ly(
   text = hover_text,
   hoverinfo = "text",
   type = "icicle",
-  branchvalues = 'total',
+  branchvalues = "total",
   textinfo = "text",
-  tiling = list(orientation = "v"),
+  tiling = list(orientation = ""),
   marker = marker)
+fig
+    # Szükséges a webshot működéséhez
+library(processx)
+library(webshot)
+webshot::install_phantomjs() 
 
-
-
+# Mentés először egy PNG-ként, majd átalakítás PDF-be
+htmlwidgets::saveWidget(fig, "temp_plot.html", selfcontained = TRUE)
+webshot("temp_plot.html", "plot.pdf", delay = 2) 
